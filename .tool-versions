@@ -1,0 +1,3 @@
+terraform 1.3.4
+terragrunt 0.40.2
+nodejs 16.16.0
