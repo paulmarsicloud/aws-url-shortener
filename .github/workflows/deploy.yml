@@ -38,7 +38,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: lambda-artifact
-          path: lambda/dist/lambda.zip
 
       - uses: marocchino/tool-versions-action@v1
         id: tool-versions
@@ -68,14 +67,13 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: lambda-artifact
-          path: lambda/dist/lambda.zip
 
       - name: S3 Endpoint Upload
         run: |
           aws s3 cp public_webpage/index.html s3://${{ env.bucket }}/
           aws lambda update-function-code \
           --function-name  ${{ env.lambda_function_name }} \
-          --zip-file fileb://lambda/dist/lambda.zip
+          --zip-file fileb://lambda.zip
         shell: bash
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
