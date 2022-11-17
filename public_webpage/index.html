@@ -1,0 +1,73 @@
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+  <head>
+    <title>Shorten a URL!</title>
+  </head>
+
+
+
+
+  <form id="myForm">
+    <div class="container text-center">
+        <h1>URL Shortener!</h1>
+        <label for="myName">URL to be shortened <strong>(include http:// or https:// please)</strong>:</label>
+        <br><br>
+        <input id="url" type="text" class="form-control" name="url" value="" placeholder="e.g. https://www.thecloudonmymind.com/Tips-for-passing-the-Certified-Kubernetes-Administrator-CKA-Exam/" />
+        <br><br>
+        <input id="submitUrl" type="submit" value="Shorten this URL!" />
+    </div>
+  </form>
+
+  <script type="text/javascript">
+    window.addEventListener("load", () => {
+    function sendData() {
+        const XHR = new XMLHttpRequest();
+        document.getElementById('submitUrl').setAttribute("disabled","disabled");
+
+        // Bind the FormData object and the form element
+        const FD = new FormData(form);
+
+
+        const url = FD.get('url');
+        json = JSON.stringify({ url: url});
+
+        // Define what happens on successful data submission
+        XHR.addEventListener("load", (event) => {
+        if (event.target.responseText.includes("System Error")) {
+            document.getElementById('errorReturned').innerHTML = event.target.responseText;
+        } else {
+            document.getElementById('returnedURL').innerHTML = event.target.responseText;
+            document.getElementById('returnedURL').href = event.target.responseText;
+        }
+
+        });
+
+        // Define what happens in case of error
+        XHR.addEventListener("error", (event) => {
+        alert('Oops! Something went wrong. Please refresh!');
+        });
+
+        // Send up our request
+        XHR.open("POST", "<REPLACE ME>");
+        XHR.send( json );
+    }
+
+
+    // Get the form element
+    const form = document.getElementById("myForm");
+
+    // Add 'submit' event handler
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        sendData();
+    });
+});
+</script>
+
+<div class="container text-center">
+<a href= "" id="returnedURL" target="_blank" rel="noopener noreferrer"> </a>
+<p id="errorReturned"> <strong> </strong> </p>
+</div>
+
+</html>

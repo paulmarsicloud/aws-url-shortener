@@ -1,0 +1,4 @@
+terraform/.terraform
+terraform/.terraform.lock.hcl
+lambda/dist
+lambda/node_modules

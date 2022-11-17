@@ -1,0 +1,6 @@
+packages:
+  lambda-test:
+    trace:
+      - ./index.js
+      - ./package.json
+    output: ./dist/lambda.zip

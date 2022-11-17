@@ -1,0 +1,16 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-sdk": "^2.1253.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "trace-pkg": "^0.5.1"
+  },
+  "scripts": {
+    "package": "trace-pkg -c trace-pkg.yml"
+  }
+}
