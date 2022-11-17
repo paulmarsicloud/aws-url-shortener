@@ -1,0 +1,83 @@
+name: deploy url-shortener
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  region: <REPLACE ME>
+  bucket: <REPLACE ME>
+  lambda_function_name: <REPLACE ME>
+
+jobs:
+  build-lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build and package
+        shell: bash
+        run: |
+          cd lambda
+          yarn
+          yarn package
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lambda-artifact
+          path: lambda/dist/lambda.zip
+
+  build-infra:
+    needs:
+      - build-lambda
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: lambda-artifact
+          path: lambda/dist/lambda.zip
+
+      - uses: marocchino/tool-versions-action@v1
+        id: tool-versions
+
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
+        with:
+          terragrunt_version: ${{ steps.tool-versions.outputs.terragrunt }}
+
+      - name: Terragrunt Apply
+        run: |
+          cd terraform
+          terragrunt init --terragrunt-non-interactive
+          terragrunt apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: ${{ env.region }}
+
+  upload-webpage-update-lambda:
+    needs:
+      - build-infra
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: lambda-artifact
+          path: lambda/dist/lambda.zip
+
+      - name: S3 Endpoint Upload
+        run: |
+          aws s3 cp public_webpage/index.html s3://${{ env.bucket }}/
+          aws lambda update-function-code \
+          --function-name  ${{ env.lambda_function_name }} \
+          --zip-file fileb://lambda/dist/lambda.zip
+        shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: ${{ env.region }}
