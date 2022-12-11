@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  region: <REPLACE ME>
-  bucket: <REPLACE ME>
-  lambda_function_name: <REPLACE ME>
+  region: us-east-1
+  bucket: makeitshort.link
+  lambda_function_name: url_shortener
 
 jobs:
   build-lambda:
@@ -70,7 +70,6 @@ jobs:
 
       - name: S3 Endpoint Upload
         run: |
-          aws s3 cp public_webpage/index.html s3://${{ env.bucket }}/
           aws lambda update-function-code \
           --function-name  ${{ env.lambda_function_name }} \
           --zip-file fileb://lambda.zip

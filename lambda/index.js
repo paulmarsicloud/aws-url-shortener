@@ -6,7 +6,7 @@ export const handler = async function (event, context) {
     const s3 = new AWS.S3();
     let generatedString = '';
     generatedString = Math.random().toString(36).substr(2, 5);
-    const redirectUrl = 'http://<REPLACE ME>/' + generatedString;
+    const redirectUrl = 'http://makeitshort.link/' + generatedString;
     console.log(redirectUrl);
     let response = {
         statusCode: 200,

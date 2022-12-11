@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "public_bucket" {
-  bucket = var.domain_name
+  bucket        = var.domain_name
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_website_configuration" "public_bucket_website_config" {
@@ -38,3 +39,11 @@ resource "aws_s3_bucket_policy" "public_bucket_policy" {
 }
 POLICY
 }
+
+resource "aws_s3_object" "index" {
+  bucket       = aws_s3_bucket.public_bucket.bucket
+  key          = "index.html"
+  content      = templatefile("./public_webpage/index.tftpl", { lambda_url = "${aws_lambda_function_url.lambda_url.function_url}" })
+  content_type = "text/html"
+}
+
