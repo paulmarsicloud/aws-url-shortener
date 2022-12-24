@@ -12,6 +12,3 @@ remote_state {
   }
 }
 
-inputs {
-
-}
