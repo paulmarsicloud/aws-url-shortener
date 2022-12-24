@@ -1,12 +1,12 @@
 'use strict';
 import AWS from 'aws-sdk';
 
-export const handler = async function (event, context) {
+export const handler = async function (event) {
     const eventBody = JSON.parse(event.body);
     const s3 = new AWS.S3();
     let generatedString = '';
     generatedString = Math.random().toString(36).substr(2, 5).split('').map(c => Math.random() < 0.5 ? c.toUpperCase() : c).join('');
-    const redirectUrl = 'http://makeitshort.link/' + generatedString;
+    const redirectUrl = 'http://' + process.env.DOMAIN_NAME + '/' + generatedString;
     console.log(redirectUrl);
     let response = {
         statusCode: 200,
@@ -16,13 +16,13 @@ export const handler = async function (event, context) {
     console.log(event);
     console.log(generatedString);
     const createdParams = {
-        Bucket: 'makeitshort.link',
+        Bucket: process.env.BUCKET,
         Key: generatedString,
         Body: '',
         WebsiteRedirectLocation: eventBody.url
     };
     const checkParams = {
-        Bucket: "makeitshort.link",
+        Bucket: process.env.BUCKET,
         Key: generatedString
     };
 

@@ -3,3 +3,9 @@ variable "domain_name" {
   type        = string
   default     = "makeitshort.link"
 }
+
+variable "environment" {
+  description = "Environment (e.g. Preview / Prod)"
+  type        = string
+  default     = ""
+}
