@@ -11,3 +11,4 @@ remote_state {
     dynamodb_table = "url-shortener-terraform-locks"
   }
 }
+

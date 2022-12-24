@@ -1,14 +1,12 @@
-name: deploy url-shortener
+name: pr preview url-shortener
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 env:
   region: us-east-1
-  bucket: makeitshort.link
-  lambda_function_name: url_shortener
+  bucket: preview.makeitshort.link
+  lambda_function_name: preview_url_shortener
 
 jobs:
   build-lambda:
@@ -50,8 +48,8 @@ jobs:
       - name: Terragrunt Apply
         run: |
           cd terraform
-          terragrunt init --terragrunt-non-interactive
-          terragrunt apply -auto-approve
+          terragrunt init --terragrunt-non-interactive --terragrunt-config preview-terragrunt.hcl
+          terragrunt apply -auto-approve --terragrunt-config preview-terragrunt.hcl
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}

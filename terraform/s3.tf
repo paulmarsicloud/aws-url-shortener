@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "public_bucket" {
-  bucket        = var.domain_name
+  bucket        = "${var.environment}${var.domain_name}"
   force_destroy = true
 }
 
@@ -33,7 +33,7 @@ resource "aws_s3_bucket_policy" "public_bucket_policy" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${var.domain_name}/*"
+      "Resource": "arn:aws:s3:::${var.environment}${var.domain_name}/*"
     }
   ]
 }

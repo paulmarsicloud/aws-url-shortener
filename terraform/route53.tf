@@ -4,7 +4,7 @@ data "aws_route53_zone" "domain_zone" {
 
 resource "aws_route53_record" "public_zone_record" {
   zone_id = data.aws_route53_zone.domain_zone.zone_id
-  name    = ""
+  name    = var.environment
   type    = "A"
   alias {
     name                   = aws_s3_bucket_website_configuration.public_bucket_website_config.website_domain
