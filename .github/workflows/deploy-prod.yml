@@ -38,10 +38,14 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: lambda-artifact
-
+      
       - uses: marocchino/tool-versions-action@v1
         id: tool-versions
 
+      # Warning: The `set-output` command is deprecated and will be 
+      # disabled soon. Please upgrade to using Environment Files.
+      # For more information see: 
+      # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
       - name: Setup Terragrunt
         uses: autero1/action-terragrunt@v1.1.0
         with:
