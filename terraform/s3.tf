@@ -23,7 +23,7 @@ resource "aws_s3_bucket_ownership_controls" "public_bucket" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "exapublic_bucketmple" {
+resource "aws_s3_bucket_public_access_block" "public_bucket" {
   bucket = aws_s3_bucket.public_bucket.id
 
   block_public_acls       = false
@@ -34,8 +34,8 @@ resource "aws_s3_bucket_public_access_block" "exapublic_bucketmple" {
 
 resource "aws_s3_bucket_acl" "public_bucket" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.example,
-    aws_s3_bucket_public_access_block.example,
+    aws_s3_bucket_ownership_controls.public_bucket,
+    aws_s3_bucket_public_access_block.public_bucket,
   ]
 
   bucket = aws_s3_bucket.public_bucket.id
