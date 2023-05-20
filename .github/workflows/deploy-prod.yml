@@ -7,7 +7,7 @@ on:
 
 env:
   region: us-east-1
-  bucket: makeitshort.link
+  bucket: meeple.pro
   lambda_function_name: url_shortener
 
 jobs:

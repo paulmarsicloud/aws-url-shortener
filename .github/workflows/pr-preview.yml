@@ -5,7 +5,7 @@ on:
 
 env:
   region: us-east-1
-  bucket: preview.makeitshort.link
+  bucket: preview.meeple.pro
   lambda_function_name: preview_url_shortener
 
 jobs:
