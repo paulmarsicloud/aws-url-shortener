@@ -1,8 +1,6 @@
 resource "aws_s3_bucket" "public_bucket" {
   bucket        = "${var.environment}${var.domain_name}"
   force_destroy = true
-  control_object_ownership = true
-  object_ownership         = "ObjectWriter"
 }
 
 resource "aws_s3_bucket_website_configuration" "public_bucket_website_config" {
@@ -18,29 +16,55 @@ resource "aws_s3_bucket_website_configuration" "public_bucket_website_config" {
 
 }
 
-resource "aws_s3_bucket_acl" "public_bucket_acl" {
+resource "aws_s3_bucket_ownership_controls" "public_bucket" {
+  bucket = aws_s3_bucket.public_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "exapublic_bucketmple" {
+  bucket = aws_s3_bucket.public_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "public_bucket" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.example,
+    aws_s3_bucket_public_access_block.example,
+  ]
+
   bucket = aws_s3_bucket.public_bucket.id
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_policy" "public_bucket_policy" {
-  bucket = aws_s3_bucket.public_bucket.id
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "PublicReadAllow",
-  "Statement": [
-    {
-      "Sid": "PublicReadGetObject",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${var.environment}${var.domain_name}/*"
-    }
-  ]
-}
-POLICY
-}
+# resource "aws_s3_bucket_acl" "public_bucket_acl" {
+#   bucket = aws_s3_bucket.public_bucket.id
+#   acl    = "public-read"
+# }
+
+# resource "aws_s3_bucket_policy" "public_bucket_policy" {
+#   bucket = aws_s3_bucket.public_bucket.id
+#   policy = <<POLICY
+# {
+#   "Version": "2012-10-17",
+#   "Id": "PublicReadAllow",
+#   "Statement": [
+#     {
+#       "Sid": "PublicReadGetObject",
+#       "Effect": "Allow",
+#       "Principal": "*",
+#       "Action": "s3:GetObject",
+#       "Resource": "arn:aws:s3:::${var.environment}${var.domain_name}/*"
+#     }
+#   ]
+# }
+# POLICY
+# }
 
 resource "aws_s3_object" "index" {
   bucket       = aws_s3_bucket.public_bucket.bucket
