@@ -4,11 +4,11 @@ remote_state {
   config = {
     region = "us-east-1"
 
-    bucket  = "preview-url-shortener-terraform-state"
+    bucket  = "preview.meeple.pro-terraform-state"
     key     = "terraform.tfstate"
     encrypt = true
 
-    dynamodb_table = "preview-url-shortener-terraform-locks"
+    dynamodb_table = "preview.meeple.pro-terraform-locks"
   }
 }
 
