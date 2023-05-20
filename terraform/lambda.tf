@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "lambda_function" {
   function_name = replace("${var.environment}url_shortener", ".", "_")
-  filename      = "./../lambda/dist/lambda.zip"
+  filename      = "../lambda.zip"
   description   = "Lambda that creates URL redirects via empty S3 objects"
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "index.handler"
