@@ -1,6 +1,8 @@
 resource "aws_s3_bucket" "public_bucket" {
   bucket        = "${var.environment}${var.domain_name}"
   force_destroy = true
+  control_object_ownership = true
+  object_ownership         = "ObjectWriter"
 }
 
 resource "aws_s3_bucket_website_configuration" "public_bucket_website_config" {
