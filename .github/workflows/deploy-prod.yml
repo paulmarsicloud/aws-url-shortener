@@ -50,7 +50,7 @@ jobs:
       - name: Terragrunt Apply
         run: |
           cd terraform
-          ls -lrta
+          ls -lrta ..
           terragrunt init --terragrunt-non-interactive --terragrunt-config prod-terragrunt.hcl
           terragrunt apply -auto-approve --terragrunt-config prod-terragrunt.hcl
         env:
