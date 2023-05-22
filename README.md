@@ -1,6 +1,6 @@
 # AWS URL Shortener
 
-[http://makeitshort.link](http://makeitshort.link)
+[https://makeitshort.link](https://makeitshort.link)
 
 ## Overview
 
