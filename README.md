@@ -4,7 +4,7 @@
 
 ## Overview
 
-Welcome to the world's **simplest** URL Shortening service! Built on AWS using Serverless services, this product takes any URL and returns a shortened URL, which simply forwards to the original input URL. This product works similarly to [tiny.url](tinyurl.com) and [bit.ly](https://bitly.com/) but is completely open source!
+Welcome to the world's **simplest** URL Shortening service![^1] Built on AWS using Serverless services, this product takes any URL and returns a shortened URL, which simply forwards to the original input URL. This product works similarly to [tiny.url](tinyurl.com) and [bit.ly](https://bitly.com/) but is completely open source!
 
 If you google search "Systems Design Interview URL Shortening" and read some of the links, you will see some rock-solid yet kind of complicated system designs. The idea behind this project was to make an architecture for a URL shortening service using the **least** amount of services and complexity as possible.
 
@@ -33,3 +33,5 @@ If you possess those three things, go ahead and fork this repo and update your T
 Please feel free to reach out directly via a Pull Request or contact me via a DM: [@paulmarsicloud](https://twitter.com/paulmarsicloud)
 
 There are **many** shortcomings of this URL Shortener - however, I have put together a [Roadmap](https://github.com/paulmarsicloud/aws-url-shortener/wiki/Roadmap!) as this is where we'll keep track of upcoming changes on the horizon!
+
+[^1]: May or may not be the world's simplest URL Shortening service 😛 
