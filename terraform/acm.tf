@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "domain_zone" {
-  name = var.root_name
+  name = var.domain_name
 }
 
 resource "aws_acm_certificate" "cert" {
