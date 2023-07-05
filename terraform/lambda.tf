@@ -20,7 +20,7 @@ resource "aws_lambda_function_url" "lambda_url" {
 
   cors {
     allow_credentials = true
-    allow_origins     = ["http://${var.environment}${var.domain_name}","https://${var.environment}${var.domain_name}"]
+    allow_origins     = ["http://${var.environment}${var.domain_name}"]
     allow_methods     = ["*"]
     allow_headers     = ["date", "keep-alive"]
     expose_headers    = ["keep-alive", "date"]

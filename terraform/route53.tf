@@ -7,8 +7,8 @@ resource "aws_route53_record" "public_zone_record" {
   name    = var.environment
   type    = "A"
   alias {
-    name                   = aws_cloudfront_distribution.cloudfront_distribution.domain_name
-    zone_id                = aws_cloudfront_distribution.cloudfront_distribution.hosted_zone_id
+    name                   = aws_s3_bucket_website_configuration.public_bucket_website_config.website_domain
+    zone_id                = aws_s3_bucket.public_bucket.hosted_zone_id
     evaluate_target_health = false
   }
 }
